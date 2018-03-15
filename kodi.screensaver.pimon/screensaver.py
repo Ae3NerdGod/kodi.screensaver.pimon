@@ -48,13 +48,13 @@ class Screensaver(xbmcgui.WindowXMLDialog):
     def onInit(self):
         self.log('onInit')
         ensurePath()
-        subprocess.call('vcgencmd display_power 0', shell=True)
+        subprocess.call('/bin/echo "standby 0" | /usr/osmc/bin/cec-client -d 1 -s', shell=True)
         self.exit_monitor = self.ExitMonitor(self.exit)
 
     def exit(self):
         self.abort_requested = True
         self.exit_monitor = None
-        subprocess.call('vcgencmd display_power 1', shell=True)
+        subprocess.call('/bin/echo "on 0" | /usr/osmc/bin/cec-client -d 1 -s', shell=True)
         self.log('exit')
         self.close()
 
